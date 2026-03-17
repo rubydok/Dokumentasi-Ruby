@@ -2,7 +2,7 @@
   "name": "GAS Dokumenter V3",
   "short_name": "Ruby Dokumentor",
   "description": "Aplikasi Dokumentasi Terpadu",
-  "start_url": "https://script.google.com/macros/s/AKfycbwWQmA6hWX4k1RqIzqS8kpCKn-th9cIoYJ-jhwrIkoQYiIzUu-2Ia2L0bks7VMB1zEaZg/exec",
+  "start_url": "index.html",
   "display": "standalone",
   "background_color": "#F2C94C",
   "theme_color": "#F2C94C",
