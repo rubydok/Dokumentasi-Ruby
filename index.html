@@ -76,18 +76,25 @@
   <iframe id="app-frame" src="https://script.google.com/macros/s/AKfycbwXZzLSN7UhOuuYP8HlmMRlFA_RVHEPexosytqmVuMoWBAE8ruZ9eddinJ7GnIlh8D4Jw/exec" onload="finishSplash()"></iframe>
 
   <script>
-    function finishSplash() {
-      const frame = document.getElementById('app-frame');
-      const splash = document.getElementById('splash-screen');
-      
-      // Delay sedikit agar animasi circle beres dulu
-      setTimeout(() => {
-        frame.classList.add('visible');
-        setTimeout(() => {
-          splash.classList.add('hidden');
-        }, 300);
-      }, 2500); 
-    }
+    // Ganti fungsi lama dengan ini di file GitHub
+function finishSplash() {
+  const frame = document.getElementById('app-frame');
+  const splash = document.getElementById('splash-screen');
+  
+  frame.classList.add('visible');
+  setTimeout(() => {
+    splash.classList.add('hidden');
+  }, 500);
+}
+
+// Pengaman: Jika dalam 10 detik iframe gak respon, paksa buka!
+setTimeout(() => {
+  const splash = document.getElementById('splash-screen');
+  if (!splash.classList.contains('hidden')) {
+    finishSplash();
+  }
+}, 10000); 
+
     if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
       navigator.serviceWorker.register('sw.js')
