@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <base target="_top">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>GAS Dokumenter V3</title>
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#F2C94C">
+  
+  <style>
+    * { box-sizing: border-box; }
+    body, html { margin: 0; padding: 0; height: 100%; width: 100%; overflow: hidden; background-color: #F2C94C; }
+    
+    #splash-screen {
+      position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+      /* Background Stretch sesuai permintaanmu */
+      background-image: url('https://drive.google.com/thumbnail?id=1Ib42zmpyOBi0o35hBHGf0lkJ7KhH1X4b&sz=w1500');
+      background-repeat: no-repeat;
+      background-position: center center;
+      background-size: 100% 100% !important;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      z-index: 9999;
+      transition: opacity 0.5s ease;
+    }
+
+    .brand-wrapper { display: flex; align-items: center; gap: 12px; z-index: 10; margin-top: -30px; }
+    
+    /* Logo & Outline Progresif */
+    .logo-container { position: relative; width: 64px; height: 64px; display: flex; align-items: center; justify-content: center; }
+    #hati-logo { width: 54px; z-index: 2; border-radius: 50%; }
+    
+    .svg-loader { position: absolute; width: 64px; height: 64px; transform: rotate(-90deg); z-index: 3; }
+    .circle-draw { 
+      fill: none; stroke: #FFFFFF; stroke-width: 3.2; stroke-linecap: round; 
+      stroke-dasharray: 195; stroke-dashoffset: 195; 
+      animation: draw 1.6s cubic-bezier(0.65, 0, 0.35, 1) forwards; 
+      animation-delay: 0.3s; 
+    }
+    @keyframes draw { to { stroke-dashoffset: 0; } }
+
+    #ruby-text { height: 54px; object-fit: contain; }
+
+    /* Footer Copyright ala Aplikasi Besar */
+    .footer-text { 
+      position: absolute; bottom: 65px; width: 85%; text-align: center; 
+      color: white; font-size: 9px; line-height: 1.5; opacity: 0.8; 
+      font-family: 'Poppins', sans-serif; letter-spacing: 0.5px; 
+    }
+
+    /* Iframe App */
+    #app-frame { position: fixed; top: 0; left: 0; border: none; width: 100%; height: 100%; opacity: 0; z-index: 1; pointer-events: none; }
+    .visible { opacity: 1 !important; transition: opacity 0.6s ease; pointer-events: auto !important; }
+    .hidden { opacity: 0; visibility: hidden; }
+  </style>
+</head>
+<body>
+
+  <div id="splash-screen">
+    <div class="brand-wrapper">
+      <div class="logo-container">
+        <svg class="svg-loader" viewBox="0 0 64 64">
+          <circle class="circle-draw" cx="32" cy="32" r="31" />
+        </svg>
+        <img id="hati-logo" src="https://drive.google.com/thumbnail?id=1p3ucC2P6VUqle4izxSQUw8sZMAwsk_9J&sz=w500">
+      </div>
+      <img id="ruby-text" src="https://drive.google.com/thumbnail?id=1Qv9WabWHfZJZ8KH2-1qnseAA_4RERvB6&sz=w500">
+    </div>
+    
+    <div class="footer-text">
+      <b>Ruby Indonesian Kids Development Center</b><br>
+      Dibuat untuk mempermudah dan mempersingkat segalanya agar bisa mencari dan menemukan tujuan hidup yang berarti
+    </div>
+  </div>
+
+  <iframe id="app-frame" src="https://script.google.com/macros/s/AKfycbwWQmA6hWX4k1RqIzqS8kpCKn-th9cIoYJ-jhwrIkoQYiIzUu-2Ia2L0bks7VMB1zEaZg/exec" onload="finishSplash()"></iframe>
+
+  <script>
+    function finishSplash() {
+      const frame = document.getElementById('app-frame');
+      const splash = document.getElementById('splash-screen');
+      
+      // Delay sedikit agar animasi circle beres dulu
+      setTimeout(() => {
+        frame.classList.add('visible');
+        setTimeout(() => {
+          splash.classList.add('hidden');
+        }, 300);
+      }, 2500); 
+    }
+
+    // Registrasi PWA
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('sw.js');
+      });
+    }
+
+    // Handle Switch Account parameter
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.has('logout')) {
+      window.location.href = "https://www.google.com/accounts/Logout?continue=https://appengine.google.com/_ah/logout?continue=" + encodeURIComponent(window.location.href.split('?')[0]);
+    }
+  </script>
+</body>
+</html>
