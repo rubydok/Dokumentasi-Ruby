@@ -88,13 +88,12 @@
         }, 300);
       }, 2500); 
     }
-
-    // Registrasi PWA
     if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register('sw.js');
-      });
-    }
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('sw.js')
+        .then(reg => console.log('PWA Ready!'))
+        .catch(err => console.error('PWA Failed', err));
+    });
 
     // Handle Switch Account parameter
     const urlParams = new URLSearchParams(window.location.search);
