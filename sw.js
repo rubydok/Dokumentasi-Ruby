@@ -1,23 +1,10 @@
-const CACHE_NAME = 'gas-dok-v3';
+const CACHE_NAME = 'rubydoc-v1';
+const urlsToCache = ['./', './index.html', './manifest.json', './icon.png'];
 
-self.addEventListener('install', (event) => {
-  self.skipWaiting();
+self.addEventListener('install', event => {
+  event.waitUntil(caches.open(CACHE_NAME).then(cache => cache.addAll(urlsToCache)));
 });
 
-self.addEventListener('fetch', (event) => {
-  // Biarkan request upload ke Google Drive lewat langsung (network only)
-  if (event.request.url.includes('googleapis.com')) {
-    return;
-  }
-  
-  event.respondWith(
-    fetch(event.request).catch(() => caches.match(event.request))
-  );
-});
-
-// Fitur Background Sync (Opsional untuk nanti)
-self.addEventListener('sync', (event) => {
-  if (event.tag === 'upload-queue') {
-    console.log('Sinkronisasi antrean upload berjalan...');
-  }
+self.addEventListener('fetch', event => {
+  event.respondWith(caches.match(event.request).then(response => response || fetch(event.request)));
 });
